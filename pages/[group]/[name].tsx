@@ -45,7 +45,6 @@ const DynamicGroupNamePage = () => {
         case "sign-in":
         case "sign-up":
         case "recovery":
-          // skipped Layout
           return (
             <SchemaContainer
               isAuthPath={true}

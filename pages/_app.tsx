@@ -8,15 +8,16 @@ import { ThemeProvider, CssBaseline } from "@material-ui/core"
 import { SnackbarProvider } from "notistack"
 import {
   defaultTheme,
-  Snackbar,
-  SnackMessage,
   initData,
   store,
+  Snackbar,
+  SnackMessage,
   CubeSpinner,
   DynamicDocRoute,
   DynamicRoute,
   IAuthPlugin,
-  DEFAULT_AUTH_PLUGIN
+  DEFAULT_AUTH_PLUGIN,
+  PluginData
 } from "@bunred/bunadmin"
 import "@bunred/bunadmin/lib/utils/i18n"
 
@@ -46,16 +47,21 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   useEffect(() => {
-    // Waiting for dynamic route
+    /**
+     * Waiting for dynamic route
+     */
     if (asPath === DynamicRoute || asPath === DynamicDocRoute) return
     ;(async () => {
       const authPluginName =
         process.env.NEXT_PUBLIC_AUTH_PLUGIN || DEFAULT_AUTH_PLUGIN
       const authPlugin: IAuthPlugin = await import(
-        `../plugins/dynamic-import/${authPluginName}`
+        `../.bunadmin/dynamic/${authPluginName}`
       )
-      const pluginsData: string[] = require("../plugins/dynamic-import/pluginsData")
-      // Init Data
+      const pluginsData: PluginData[] = require("../.bunadmin/dynamic/pluginsData")
+
+      /**
+       * Initialization data
+       */
       await initData({
         i18n,
         authPlugin,
@@ -82,9 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={defaultTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {/* Snackbar / Notice */}
           <SnackbarProvider
             anchorOrigin={{
               vertical: "top",
@@ -97,7 +101,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           >
             <Snackbar />
           </SnackbarProvider>
-          {/* Core component */}
           <Component {...pageProps} />
         </ThemeProvider>
       </Provider>
