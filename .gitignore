@@ -32,3 +32,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# ide
+.idea/workspace.xml
+.idea/vcs.xml
+
+# bunadmin
+.bunadmin
