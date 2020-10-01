@@ -9,11 +9,22 @@ import {
 function PluginTable({ team, group, name, hideLoading }: PluginTableProps) {
   const pluginPath = handlePluginPath({ team, group, name })
 
-  const Plugin = dynamic({
-    loader: () => import(`../.bunadmin/dynamic/${pluginPath}`),
-    loading: () =>
-      hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
-  })
+  /**
+   * Load plugin that override or customize
+   */
+  let CustomPlugin
+  try {
+    CustomPlugin = require(`../plugins/${pluginPath}`)
+    CustomPlugin = CustomPlugin.default
+  } catch (e) {}
+
+  const Plugin =
+    CustomPlugin ||
+    dynamic({
+      loader: () => import(`../.bunadmin/dynamic/${pluginPath}`),
+      loading: () =>
+        hideLoading ? null : <TableSkeleton title={`${name} loading...`} />
+    })
 
   return <Plugin />
 }
