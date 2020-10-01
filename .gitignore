@@ -39,3 +39,4 @@ yarn-error.log*
 
 # bunadmin
 .bunadmin
+/plugins/pluginsData.ts
