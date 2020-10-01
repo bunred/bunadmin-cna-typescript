@@ -16,9 +16,10 @@ module.exports = () => {
           fs: "empty"
         }
       } else {
-        const nodeModulesPath = path.resolve(__dirname, "./node_modules")
-        const pluginsDynamicPath = path.resolve(__dirname, "./.bunadmin/dynamic")
-        bunadminPlugin({ nodeModulesPath, pluginsDynamicPath })
+        const modulesPath = path.resolve(__dirname, "./node_modules")
+        const dynamicPath = path.resolve(__dirname, "./.bunadmin/dynamic")
+        const pluginsPath = path.resolve(__dirname, "./plugins")
+        bunadminPlugin({ modulesPath, dynamicPath, pluginsPath })
       }
       /**
        * ignore
